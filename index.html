@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Poema para mi Jojitos lindos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Diseño moderno con una paleta de color amarillo "cute" */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fefce8; /* Un fondo amarillo pálido y muy suave */
+            color: #4a4a4a; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .font-heading { 
+            font-family: 'Playfair Display', serif; 
+        }
+
+        .flower-petal {
+            position: absolute;
+            background-color: rgba(252, 211, 77, 0.4); /* Pétalos en tono amarillo ambar sutil */
+            border-radius: 50% 0;
+            opacity: 0;
+            animation: fall 40s linear infinite;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+        @keyframes fall {
+            0% { top: -10%; opacity: 1; transform: rotate(0deg) scale(0.8); }
+            100% { top: 110%; opacity: 0; transform: rotate(720deg) scale(0.4); }
+        }
+
+        .special-button {
+            transition: all 0.3s ease;
+            background-color: #facc15; /* Amarillo ambar brillante */
+            box-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .special-button:hover {
+            transform: scale(1.03) translateY(-2px);
+            background-color: #f59e0b; /* Un tono más oscuro para el hover */
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Flor y animación */
+        .central-flower {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            color: #facc15; /* Color del ícono principal */
+        }
+        .central-flower.animate {
+             animation: bloom 2s ease-out forwards;
+        }
+        @keyframes bloom {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1.05) rotate(0deg); }
+        }
+
+        /* -- ESTRUCTURA DE TRANSICIÓN -- */
+        .transition-container {
+            display: grid;
+            place-items: center;
+        }
+
+        .transition-view {
+            grid-area: 1 / 1;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+        
+        .transition-view:not(.is-visible) {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        /* -- NUEVA CARD ESTILO CRISTAL -- */
+        .content-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Para compatibilidad con Safari */
+            border-radius: 1.5rem; /* 24px */
+            padding: 2.5rem; /* 40px */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .poem-line {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .heart {
+            display: inline-block;
+            color: #e11d48;
+            animation: beat 1.8s infinite ease-in-out;
+        }
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(0.95); }
+            20%, 40% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <div id="petal-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+
+    <main class="container mx-auto px-4 py-8 text-center max-w-lg">
+        <div class="transition-container"> <!-- Contenedor para manejar las vistas -->
+            <div id="initial-view" class="transition-view is-visible">
+                <div class="content-card">
+                    <svg id="main-flower" class="central-flower" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#facc15" stroke="none"/>
+                        <path d="M12 3.43c-1.88 0-3.62.9-4.8 2.44" stroke-width="0.5"/>
+                    </svg>
+                    <h1 class="font-heading text-4xl md:text-5xl text-gray-800 mb-4">Para mi flor favorita, Liliana</h1>
+                    <p class="text-gray-500 mb-8 text-lg">Unas palabras para ti...</p>
+                    <button id="reveal-button" class="special-button text-white font-bold py-3 px-10 rounded-full text-lg">
+                        Abrir <span class="heart">💗</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="poem-view" class="transition-view">
+                <div class="content-card">
+                    <h2 class="font-heading text-4xl md:text-5xl text-gray-800 mb-6">Para Ti</h2>
+                    <div class="space-y-4 text-gray-700 text-xl md:text-2xl">
+                        <p class="poem-line">Como una peonía que anhela la luz,</p>
+                        <p class="poem-line">mi corazón siempre se dirige hacia ti.</p>
+                        <p class="poem-line">Tus ojos, faros de mi amanecer,</p>
+                        <p class="poem-line">hacen florecer mi alma con tu alegría.</p>
+                    </div>
+                    <p class="poem-line font-semibold text-gray-800 mt-8 text-lg opacity-0">Feliz Día, mvida mia.  💗</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const petalContainer = document.getElementById('petal-container');
+            const revealButton = document.getElementById('reveal-button');
+            const initialView = document.getElementById('initial-view');
+            const poemView = document.getElementById('poem-view');
+            const mainFlower = document.getElementById('main-flower');
+
+            function createPetals() {
+                const count = 350; // Un número fijo y sutil de pétalos
+                for (let i = 0; i < count; i++) {
+                    const petal = document.createElement('div');
+                    petal.className = 'flower-petal';
+                    const size = Math.random() * 10 + 5;
+                    petal.style.width = `${size}px`;
+                    petal.style.height = `${size * 0.7}px`;
+                    petal.style.left = `${Math.random() * 100}%`;
+                    petal.style.animationDelay = `${Math.random() * 40}s`;
+                    petal.style.animationDuration = `${Math.random() * 30 + 20}s`;
+                    petalContainer.appendChild(petal);
+                }
+            }
+            
+            revealButton.addEventListener('click', () => {
+                // Anima la flor
+                mainFlower.classList.add('animate');
+                
+                // Intercambia la visibilidad de las vistas
+                initialView.classList.remove('is-visible');
+                poemView.classList.add('is-visible');
+
+                // Anima las líneas del poema para que aparezcan
+                const poemLines = document.querySelectorAll('.poem-line');
+                poemLines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.style.opacity = '1';
+                        line.style.transform = 'translateY(0)';
+                    }, index * 800 + 800); // Un retraso elegante para la aparición
+                });
+            });
+            
+            createPetals();
+        });
+    </script>
+</body>
+</html>
+
